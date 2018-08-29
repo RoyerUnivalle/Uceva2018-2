@@ -51,21 +51,12 @@
 </head>
 
 <body>
-    <div id="menu">
-     <form class="px-4 py-3">
-        <div class="form-group">
-            <label for="exampleDropdownFormEmail1">Correo</label>
-            <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="test@example.com">
-        </div>
-        <div class="form-group">
-            <label for="exampleDropdownFormPassword1">Contraseña</label>
-            <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Contraseña">
-        </div>
-        
-        <button type="button" class="btn btn-primary" onclick="javascript:ir();">Ir</button>
-		<button type="button" class="btn btn-primary" onclick="javascript:alert('hola');">Saludar</button>
-        </form>
-		</div>
+    
+	<div id="result">Blank</div>
+	<button type="button" class="btn btn-primary" onclick="javascript:back();">Regresar</button>
+	<button type="button" class="btn btn-primary" onclick="javascript:leer(1);">Leer Mocky.io</button>
+	<button type="button" class="btn btn-primary" onclick="javascript:leer(2);">Leer LocalHost</button>
+	<button type="button" class="btn btn-primary" onclick="javascript:leer(3);">Leer Ajax</button>
 
 	<!-- JQuery -->
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
@@ -78,12 +69,56 @@
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">
-		function saludar(){
-		alert("hola celular");
+		function back(){
+		location.href="http://172.0.12.97:3000/index.html";
 		}
-		function ir(){
-		//var ref = window.open('home.html', '_blank', 'location=yes');
-		location.href="http://172.0.12.97:3000/home.html";
+		function leer(opcion){
+		if(opcion==1){
+		$( "#result" ).load("http://www.mocky.io/v2/5b86a9e4340000db018b5725");
+		}else if(opcion==2){
+		$( "#result" ).load("http://localhost/get.php");
+		}else if(opcion==3){
+			$.ajax({
+			  //url:"http://www.mocky.io/v2/5b86a9e4340000db018b5725",
+			  url:"http://www.mocky.io/v2/5b86bb25340000b1058b576c",
+			  success: function(resul){
+			  
+			  //var myObj = JSON.parse(resul);
+			  /*var myObj2 = {
+					"count":3,
+					"sectors": [
+						{"description":"Ford", "models":["Fiesta", "Focus", "Mustang"]},
+						{"description":"BMW", "models":["320", "X3", "X5"]},
+						{"description":"Fiat", "models":["500", "Panda"] }
+					]
+				}*/
+			  var x="<table class='table' border='1' id='resultado'>";
+			  x+= "<tr>";
+			  x+= "<th>Id</th>";
+			  x+= "<th>Nombre</th>";
+			  x+= "<th>Universidad</th>";
+			  x+= "</tr>";
+			  for (i in resul.alumnos) {
+					x+="<tr>";
+					x+= "<td>"+resul.alumnos[i].id +"</td>";
+					x+= "<td>"+resul.alumnos[i].name +"</td>";
+					x+= "<td>"+resul.alumnos[i].ies +"</td>";
+					//x += "<h2>" + resul.alumnos[i].id + "</h2>";
+					/*for (j in myObj.sectors[i].models) {
+						x += myObj.sectors[i].models[j] + "<br>";
+					}*/
+					x+="</tr>";
+				}
+				x+= "</table>";
+				document.getElementById("result").innerHTML = x;
+			  },
+			  statusCode: {
+				200: function() {
+				  alert( "Datos encontrados" );
+				}
+			  }
+			});
+		}
 		}
         app.initialize();
     </script>
