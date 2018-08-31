@@ -48,6 +48,17 @@
     <link href="css/mdb.min.css" rel="stylesheet">
     <!-- Your custom styles (optional) -->
     <link href="css/style.css" rel="stylesheet">
+	<link href="css/jquery.mobile.custom.theme.min.css" rel="stylesheet">
+	<link href="css/jquery.mobile.custom.structure.min.css" rel="stylesheet">
+	
+	<style>
+			table { width:100%; border-spacing: 0; }
+		th { text-align:left; }
+		th h3 { margin:.6em 0 .6em .5em; }
+		th, td { vertical-align:top; border-top:1px solid #eee; padding: 1px 3px; background-color:#fcfcfc; }
+		td .ui-btn { margin:.4em 0 .5em 0; }
+		td .ui-btn-inner { padding: .4em 15px; }
+	</style>
 </head>
 
 <body>
@@ -62,8 +73,56 @@
             <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Contraseña">
         </div>
         
-        <button type="submit" class="btn btn-primary" onclick="javascript:saludar();">Saludar</button>
+        <button type="button" class="btn btn-primary" onclick="javascript:ir();">Ir</button>
+		<button type="button" class="btn btn-primary" onclick="javascript:alert('hola');">Saludar</button>
+		<button type="button" class="btn btn-primary" onclick="javascript:checkConnection();">Tipo Conexion</button>
         </form>
+		
+		<!--jquery Mobile-->
+		<table margin="0">
+    <tbody><tr>
+        <th><h3>fade</h3></th>
+        <td><a href="home.html" data-transition="fade" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">page</a></td>
+    </tr>
+    <tr>
+        <th><h3>pop</h3></th>
+        <td><a href="home.html" data-transition="pop" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">page</a></td>
+    </tr>
+    <tr>
+        <th><h3>flip</h3></th>
+        <td><a href="home.html" data-transition="flip" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">page</a></td>
+    </tr>
+    <tr>
+        <th><h3>turn</h3></th>
+        <td><a href="home.html" data-transition="turn" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">page</a></td>
+    </tr>
+    <tr>
+        <th><h3>flow</h3></th>
+        <td><a href="home.html" data-transition="flow" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">page</a></td>
+    </tr>
+    <tr>
+        <th><h3>slidefade</h3></th>
+        <td><a href="home.html" data-transition="slidefade" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">page</a></td>
+    </tr>
+    <tr>
+        <th><h3>slide</h3></th>
+        <td><a href="home.html" data-transition="slide" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">page</a></td>
+    </tr>
+    <tr>
+        <th><h3>slideup</h3></th>
+        <td><a href="home.html" data-transition="slideup" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">page</a></td>
+    </tr>
+    <tr>
+        <th><h3>slidedown</h3></th>
+        <td><a href="home.html" data-transition="slidedown" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">page</a></td>
+    </tr>
+    <tr>
+        <th><h3>none</h3></th>
+        <td><a href="home.html" data-transition="none" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">page</a></td>
+    </tr>
+</tbody></table>
+		
+		
 		</div>
 
 	<!-- JQuery -->
@@ -76,9 +135,29 @@
     <script type="text/javascript" src="js/mdb.min.js"></script>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="js/jquery.mobile.custom.min.js"></script>
     <script type="text/javascript">
 		function saludar(){
 		alert("hola celular");
+		}
+		function ir(){
+		//var ref = window.open('home.html', '_blank', 'location=yes');
+		location.href="/home.html";
+		}
+		function checkConnection() {
+			var networkState = navigator.connection.type;
+
+			var states = {};
+			states[Connection.UNKNOWN]  = 'Unknown connection';
+			states[Connection.ETHERNET] = 'Ethernet connection';
+			states[Connection.WIFI]     = 'WiFi connection';
+			states[Connection.CELL_2G]  = 'Cell 2G connection';
+			states[Connection.CELL_3G]  = 'Cell 3G connection';
+			states[Connection.CELL_4G]  = 'Cell 4G connection';
+			states[Connection.CELL]     = 'Cell generic connection';
+			states[Connection.NONE]     = 'No network connection';
+
+			alert('Connection type: ' + states[networkState]);
 		}
         app.initialize();
     </script>
