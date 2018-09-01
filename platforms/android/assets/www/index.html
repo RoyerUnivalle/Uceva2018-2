@@ -58,6 +58,8 @@
 		th, td { vertical-align:top; border-top:1px solid #eee; padding: 1px 3px; background-color:#fcfcfc; }
 		td .ui-btn { margin:.4em 0 .5em 0; }
 		td .ui-btn-inner { padding: .4em 15px; }
+		
+		.ui-page { -webkit-backface-visibility: hidden; } 
 	</style>
 </head>
 
@@ -72,12 +74,23 @@
             <label for="exampleDropdownFormPassword1">Contraseña</label>
             <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Contraseña">
         </div>
+		<div class="form-group">
+		<input type="text" class="form-control" placeholder="NUMERO" id="number"/>
+		</div>
         
         <button type="button" class="btn btn-primary" onclick="javascript:ir();">Ir</button>
-		<button type="button" class="btn btn-primary" onclick="javascript:alert('hola');">Saludar</button>
+		<button type="button" class="btn btn-primary" onclick="javascript:saludar();">Saludar</button>
 		<button type="button" class="btn btn-primary" onclick="javascript:checkConnection();">Tipo Conexion</button>
+		<button type="button" class="btn btn-primary" id="buscarContactos" onclick="javascript:onDeviceReady();">Contactos</button>
         </form>
 		
+		<table id='myTable' border='1'>
+		<tr>
+		<td>displayName</td>
+		<td>name</td>
+		</tr>
+		</table>
+		<br>
 		<!--jquery Mobile-->
 		<table margin="0">
     <tbody><tr>
@@ -122,8 +135,28 @@
     </tr>
 </tbody></table>
 		
-		
-		</div>
+</div>
+
+<!-- Central Modal Small -->
+<div class="modal fade" id="myModalConect" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <!-- Change class .modal-sm to change the size of the modal -->
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title w-100" id="myModalLabel">Connection type</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div id="bodyConnect" class="modal-body"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary btn-sm">Aceptar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Central Modal Small -->
 
 	<!-- JQuery -->
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
@@ -137,8 +170,22 @@
     <script type="text/javascript" src="js/index.js"></script>
 	<script type="text/javascript" src="js/jquery.mobile.custom.min.js"></script>
     <script type="text/javascript">
+	
+	    $(document).one("mobileinit", function () {
+
+            // Setting #container div as a jqm pageContainer
+            $.mobile.pageContainer = $('#container');
+
+            // Setting default page transition to slide
+            $.mobile.defaultPageTransition = 'slide';
+
+        });
+	
 		function saludar(){
-		alert("hola celular");
+		//alert("hola celular");
+		document.getElementById("myModalLabel").innerHTML = "Hola Movil";
+		document.getElementById("bodyConnect").innerHTML = "Saludo";
+	    $('#myModalConect').modal()
 		}
 		function ir(){
 		//var ref = window.open('home.html', '_blank', 'location=yes');
@@ -157,8 +204,44 @@
 			states[Connection.CELL]     = 'Cell generic connection';
 			states[Connection.NONE]     = 'No network connection';
 
-			alert('Connection type: ' + states[networkState]);
+			//alert('Connection type: ' + states[networkState]);
+			document.getElementById("bodyConnect").innerHTML = states[networkState];
+			$('#myModalConect').modal()
 		}
+		<!--CONTACTOS-->
+		function onDeviceReady() {
+				//alert('hola');
+                var options = new ContactFindOptions();
+				var telefono=document.getElementById("number").value;
+				var fields = ["displayName", "name"];
+				if(telefono.length>0){
+				options.filter = telefono;
+				fields = ["displayName", "phoneNumbers"];
+				//options.hasPhoneNumber =true;
+				//options.filter = "maria";
+				}
+				options.multiple=true;
+                navigator.contacts.find(fields, onSuccess, onError, options);
+            }
+            // onSuccess: Get a snapshot of the current contacts
+            function onSuccess(contacts) {
+			console.log("Contactos = " + contacts.length);
+			//alert('cantidad:'+contacts.length);
+                var table = document.getElementById("myTable");
+				for (var i = 0; i < contacts.length; i++) {
+                    console.log("Display Name = " + contacts[i].displayName);
+					var row = table.insertRow(0);
+					var cell1 = row.insertCell(0);
+					var cell2 = row.insertCell(1);
+					cell1.innerHTML = "Name";
+					cell2.innerHTML = contacts[i].displayName;
+                }
+            }
+            // onError: Failed to get the contacts
+            function onError(contactError) {
+                alert('onError!');
+            }
+			<!--CONTACTOS-->
         app.initialize();
     </script>
 </body>

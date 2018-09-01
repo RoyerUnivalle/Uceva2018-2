@@ -53,10 +53,38 @@
 <body>
     
 	<div id="result">Blank</div>
-	<button type="button" class="btn btn-primary" onclick="javascript:back();">Regresar</button>
-	<button type="button" class="btn btn-primary" onclick="javascript:leer(1);">Leer Mocky.io</button>
-	<button type="button" class="btn btn-primary" onclick="javascript:leer(2);">Leer LocalHost</button>
-	<button type="button" class="btn btn-primary" onclick="javascript:leer(3);">Leer Ajax</button>
+	
+<div class="row">
+    <div class="col-sm-3"><a class="btn btn-primary" href="index.html" data-transition="slide" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">Regresar</a></div>
+    <div class="col-sm-3"><button type="button" class="btn btn-primary" onclick="javascript:leer(1);">Leer Mocky.io</button></div>
+    <div class="col-sm-3"><button type="button" class="btn btn-primary" onclick="javascript:leer(2);">Leer LocalHost</button></div>
+	<div class="col-sm-3"><button type="button" class="btn btn-primary" onclick="javascript:leer(3);">Leer Ajax</button></div>
+</div>
+
+<!-- Frame Modal Bottom -->
+<div class="modal fade bottom" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <!-- Add class .modal-frame and then add class .modal-bottom (or other classes from list above) to set a position to the modal -->
+    <div class="modal-dialog modal-frame modal-bottom" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="row d-flex justify-content-center align-items-center">
+            <p class="pt-3 pr-2">Datos encontrados</p>
+			<br>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primary">Aceptar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Frame Modal Bottom -->
+	
+	<!--<button type="button" class="btn btn-primary" onclick="javascript:back();">Regresar</button>-->
+	
+	
+	
+	
+	
 
 	<!-- JQuery -->
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
@@ -114,7 +142,8 @@
 			  },
 			  statusCode: {
 				200: function() {
-				  alert( "Datos encontrados" );
+				  //alert( "Datos encontrados" );
+				  $('#myModal').modal()
 				}
 			  }
 			});
