@@ -198,10 +198,10 @@
 			$('#myModalConect').modal()
 		}
 		<!--CONTACTOS-->
-		function onDeviceReady() {
-				//alert('hola');
+					function onDeviceReady() {
+			alert('hola');
                 var options = new ContactFindOptions();
-				var telefono=document.getElementById("number").value;
+				var telefono=document.getElementById("numero").value;
 				var fields = ["displayName", "name"];
 				if(telefono.length>0){
 				options.filter = telefono;
@@ -215,7 +215,7 @@
             // onSuccess: Get a snapshot of the current contacts
             function onSuccess(contacts) {
 			console.log("Contactos = " + contacts.length);
-			//alert('cantidad:'+contacts.length);
+			alert('cantidad:'+contacts.length);
                 var table = document.getElementById("myTable");
 				for (var i = 0; i < contacts.length; i++) {
                     console.log("Display Name = " + contacts[i].displayName);
